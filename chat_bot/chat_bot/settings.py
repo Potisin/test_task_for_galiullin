@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-6658#2c+b-r_8tg^imcu%g-rtiyhrb*l(u%opaizw+f1g#2r7w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
+    'botsessions',
+    'users',
 
 ]
 
@@ -82,11 +85,11 @@ WSGI_APPLICATION = 'chat_bot.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("API_PG_DB"),
-        "USER": os.environ.get("API_PG_USER"),
-        "PASSWORD": os.environ.get("API_PG_PASSWORD"),
-        "HOST": os.environ.get("API_PG_HOST"),
-        "PORT": os.environ.get("API_PG_PORT"),
+        "NAME": os.environ.get("POSTGRES_DB"),
+        "USER": os.environ.get("POSTGRES_USER"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+        "HOST": os.environ.get("POSTGRES_HOST"),
+        "PORT": os.environ.get("POSTGRES_PORT"),
     },
 }
 
@@ -109,6 +112,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
